@@ -1,229 +1,211 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const navItems = [
-  { id: "hero", label: "פתיחה" },
-  { id: "background", label: "רקע" },
-  { id: "flow", label: "מהלך" },
-  { id: "roles", label: "תפקידים" },
-  { id: "facilitation", label: "הנחיה" },
-  { id: "reflection", label: "רפלקציה" },
-  { id: "summary", label: "סיכום" },
+export const PAGES = [
+  { path: "/",             label: "פתיחה",            short: "פתיחה" },
+  { path: "/background",  label: "רקע לסימולציה",    short: "רקע" },
+  { path: "/flow",        label: "מהלך הישיבה",      short: "מהלך" },
+  { path: "/roles",       label: "כרטיסיות תפקיד",   short: "תפקידים" },
+  { path: "/facilitation",label: "הנחיית הסימולציה", short: "הנחיה" },
+  { path: "/reflection",  label: "רפלקציה קבוצתית",  short: "רפלקציה" },
+  { path: "/summary",     label: "סיכום",             short: "סיכום" },
 ];
 
+const MaccabiLogo: React.FC = () => (
+  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+    {/* Maccabi leaf / shield mark */}
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-label="לוגו מכבי">
+      <rect width="34" height="34" rx="8" fill="#00A651"/>
+      <path d="M17 6 C17 6 9 11 9 19 C9 24 13 27 17 28 C21 27 25 24 25 19 C25 11 17 6 17 6Z"
+            fill="white" opacity="0.9"/>
+      <path d="M17 11 C17 11 12 15 12 20 C12 23.3 14.5 25 17 26 C19.5 25 22 23.3 22 20 C22 15 17 11 17 11Z"
+            fill="#00A651"/>
+    </svg>
+    <div>
+      <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#00703A", lineHeight: 1.1 }}>
+        מכבי שירותי בריאות
+      </div>
+      <div style={{ fontWeight: 500, fontSize: "0.72rem", color: "#5A7A65", lineHeight: 1 }}>
+        AI Master — ניהול בעידן האג'נטי
+      </div>
+    </div>
+  </div>
+);
+
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [active, setActive] = useState("hero");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const navigate   = useNavigate();
+  const { pathname } = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const sections = navItems.map((n) => document.getElementById(n.id));
-      let current = "hero";
-      sections.forEach((sec) => {
-        if (sec && window.scrollY >= sec.offsetTop - 100) {
-          current = sec.id;
-        }
-      });
-      setActive(current);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const currentIdx = PAGES.findIndex(p => p.path === pathname);
+  const hasPrev    = currentIdx > 0;
+  const hasNext    = currentIdx < PAGES.length - 1;
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
-  };
+  const goTo = (path: string) => navigate(path);
 
   return (
     <>
-      <nav
-        role="navigation"
-        aria-label="ניווט ראשי"
+      {/* ── Top bar ───────────────────────────────── */}
+      <header
         style={{
           position: "fixed",
-          top: 0,
-          right: 0,
-          left: 0,
+          top: 0, right: 0, left: 0,
           zIndex: 100,
+          background: "#fff",
+          borderBottom: "1px solid var(--border)",
+          boxShadow: "var(--shadow-sm)",
           height: "var(--nav-h)",
-          background: scrolled
-            ? "rgba(10,14,26,0.95)"
-            : "rgba(10,14,26,0.7)",
-          backdropFilter: "blur(12px)",
-          borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.07)"
-            : "1px solid transparent",
-          transition: "all 0.3s ease",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 24px",
         }}
       >
         <div
           style={{
+            maxWidth: 960,
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            width: "100%",
-            maxWidth: 1200,
-            margin: "0 auto",
+            gap: 16,
           }}
         >
-          {/* Logo */}
           <button
-            onClick={() => scrollTo("hero")}
-            aria-label="חזרה לדף הבית"
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
+            onClick={() => goTo("/")}
+            aria-label="עמוד הבית"
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
           >
-            <div
+            <MaccabiLogo />
+          </button>
+
+          {/* Step dots — desktop */}
+          <nav aria-label="ניווט שלבים" className="step-dots-nav">
+            <ol
               style={{
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: "var(--gradient-accent)",
                 display: "flex",
+                gap: 6,
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
                 alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 800,
-                fontSize: "0.85rem",
-                color: "white",
-                flexShrink: 0,
               }}
             >
-              AI
-            </div>
-            <span
-              style={{
-                fontWeight: 700,
-                fontSize: "0.95rem",
-                color: "var(--white)",
-                letterSpacing: "0.02em",
-              }}
-            >
-              AI Master
+              {PAGES.map((page, idx) => {
+                const isActive = idx === currentIdx;
+                const isDone   = idx < currentIdx;
+                return (
+                  <li key={page.path}>
+                    <button
+                      onClick={() => goTo(page.path)}
+                      aria-label={page.label}
+                      aria-current={isActive ? "step" : undefined}
+                      title={page.label}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 5,
+                        background: isActive ? "var(--green)" : isDone ? "var(--green-light)" : "var(--bg)",
+                        border: `1.5px solid ${isActive ? "var(--green)" : isDone ? "var(--green-mid)" : "var(--border)"}`,
+                        borderRadius: 999,
+                        padding: isActive ? "5px 14px" : "5px 10px",
+                        cursor: "pointer",
+                        fontFamily: "var(--font)",
+                        fontWeight: isActive ? 700 : 500,
+                        fontSize: "0.78rem",
+                        color: isActive ? "#fff" : isDone ? "var(--green-dark)" : "var(--text-muted)",
+                        transition: "all 0.2s",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {isDone && <span aria-hidden="true" style={{ fontSize: "0.7rem" }}>✓</span>}
+                      {isActive ? page.label : page.short}
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+
+          {/* Progress fraction — mobile */}
+          <div className="step-mobile-label" aria-live="polite">
+            <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--green-dark)" }}>
+              {currentIdx + 1} / {PAGES.length}
             </span>
-          </button>
-
-          {/* Desktop nav */}
-          <ul
-            role="list"
-            style={{
-              display: "flex",
-              gap: 4,
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-            }}
-            className="desktop-nav"
-          >
-            {navItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => scrollTo(item.id)}
-                  aria-current={active === item.id ? "page" : undefined}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color:
-                      active === item.id
-                        ? "var(--cyan-light)"
-                        : "var(--muted)",
-                    fontWeight: active === item.id ? 700 : 500,
-                    fontSize: "0.9rem",
-                    padding: "6px 12px",
-                    borderRadius: 6,
-                    transition: "color 0.2s",
-                    fontFamily: "var(--font)",
-                  }}
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          {/* Mobile burger */}
-          <button
-            className="mobile-burger"
-            aria-label={menuOpen ? "סגור תפריט" : "פתח תפריט"}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(!menuOpen)}
-            style={{
-              background: "none",
-              border: "1px solid rgba(255,255,255,0.15)",
-              borderRadius: 8,
-              padding: "8px 10px",
-              cursor: "pointer",
-              display: "none",
-              flexDirection: "column",
-              gap: 5,
-            }}
-          >
-            <span style={{ display: "block", width: 20, height: 2, background: "var(--text)", borderRadius: 1 }} />
-            <span style={{ display: "block", width: 20, height: 2, background: "var(--text)", borderRadius: 1 }} />
-            <span style={{ display: "block", width: 20, height: 2, background: "var(--text)", borderRadius: 1 }} />
-          </button>
+            <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginRight: 6 }}>
+              {PAGES[currentIdx]?.label}
+            </span>
+          </div>
         </div>
-      </nav>
 
-      {/* Mobile menu */}
-      {menuOpen && (
+        {/* Progress bar */}
         <div
-          role="dialog"
-          aria-label="תפריט ניווט"
           style={{
-            position: "fixed",
-            top: "var(--nav-h)",
-            right: 0,
-            left: 0,
-            zIndex: 99,
-            background: "var(--navy-mid)",
-            borderBottom: "1px solid var(--navy-border)",
-            padding: "16px 24px 24px",
+            position: "absolute",
+            bottom: 0, right: 0, left: 0,
+            height: 3,
+            background: "var(--border-mid)",
           }}
+          aria-hidden="true"
         >
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              style={{
-                display: "block",
-                width: "100%",
-                textAlign: "right",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                color:
-                  active === item.id ? "var(--cyan-light)" : "var(--text)",
-                fontWeight: active === item.id ? 700 : 500,
-                fontSize: "1.05rem",
-                padding: "12px 0",
-                borderBottom: "1px solid var(--navy-border)",
-                fontFamily: "var(--font)",
-              }}
-            >
-              {item.label}
-            </button>
-          ))}
+          <div
+            style={{
+              height: "100%",
+              width: `${((currentIdx + 1) / PAGES.length) * 100}%`,
+              background: "var(--green)",
+              borderRadius: "0 2px 2px 0",
+              transition: "width 0.35s ease",
+            }}
+          />
+        </div>
+      </header>
+
+      {/* ── Main content ──────────────────────────── */}
+      <main style={{ paddingTop: "var(--nav-h)" }}>
+        {children}
+      </main>
+
+      {/* ── Bottom page navigation ────────────────── */}
+      {currentIdx >= 0 && (
+        <div className="page-nav" role="navigation" aria-label="ניווט בין עמודים">
+          {/* Previous */}
+          <button
+            className="btn btn-ghost"
+            onClick={() => hasPrev && goTo(PAGES[currentIdx - 1].path)}
+            disabled={!hasPrev}
+            aria-label={hasPrev ? `חזרה: ${PAGES[currentIdx - 1].label}` : "אין עמוד קודם"}
+            style={{ opacity: hasPrev ? 1 : 0, pointerEvents: hasPrev ? "auto" : "none", fontSize: "0.9rem", padding: "9px 20px" }}
+          >
+            → {hasPrev ? PAGES[currentIdx - 1].short : ""}
+          </button>
+
+          {/* Current step indicator */}
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginBottom: 3 }}>
+              שלב {currentIdx + 1} מתוך {PAGES.length}
+            </div>
+            <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "var(--text)" }}>
+              {PAGES[currentIdx].label}
+            </div>
+          </div>
+
+          {/* Next */}
+          <button
+            className="btn btn-primary"
+            onClick={() => hasNext && goTo(PAGES[currentIdx + 1].path)}
+            disabled={!hasNext}
+            aria-label={hasNext ? `המשך: ${PAGES[currentIdx + 1].label}` : "זהו השלב האחרון"}
+            style={{ fontSize: "0.9rem", padding: "9px 20px", opacity: hasNext ? 1 : 0.4 }}
+          >
+            {hasNext ? PAGES[currentIdx + 1].short : "סיום"} ←
+          </button>
         </div>
       )}
 
-      <main style={{ paddingTop: "var(--nav-h)" }}>{children}</main>
-
       <style>{`
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-burger { display: flex !important; }
+        @media (max-width: 780px) {
+          .step-dots-nav  { display: none !important; }
+          .step-mobile-label { display: flex; align-items: center; }
+        }
+        @media (min-width: 781px) {
+          .step-mobile-label { display: none !important; }
         }
       `}</style>
     </>

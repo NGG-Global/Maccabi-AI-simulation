@@ -44,10 +44,10 @@ const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     style={{
       fontSize: "1rem",
       fontWeight: 800,
-      color: "var(--white)",
+      color: "var(--text)",
       padding: "10px 16px",
-      background: "rgba(124,58,237,0.15)",
-      borderRight: "4px solid var(--purple)",
+      background: "var(--green-light)",
+      borderRight: "4px solid var(--green)",
       borderRadius: "0 var(--radius-sm) var(--radius-sm) 0",
       marginBottom: 20,
       letterSpacing: "0.01em",
@@ -73,7 +73,7 @@ const Textarea: React.FC<{
         display: hideLabel ? "none" : "block",
         fontSize: "0.82rem",
         fontWeight: 700,
-        color: "var(--muted)",
+        color: "var(--text-muted)",
         marginBottom: 6,
         letterSpacing: "0.03em",
       }}
@@ -88,8 +88,8 @@ const Textarea: React.FC<{
       rows={rows}
       style={{
         width: "100%",
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid var(--navy-border)",
+        background: "var(--bg)",
+        border: "1px solid var(--border)",
         borderRadius: "var(--radius-sm)",
         color: "var(--text)",
         fontFamily: "var(--font)",
@@ -292,7 +292,7 @@ const ObservationForm: React.FC = () => {
         style={{
           background:
             "linear-gradient(135deg, rgba(124,58,237,0.18) 0%, rgba(6,182,212,0.1) 100%)",
-          border: "1px solid rgba(124,58,237,0.3)",
+          border: "1px solid var(--green-mid)",
           borderRadius: "var(--radius-md)",
           padding: "20px 22px",
         }}
@@ -301,7 +301,7 @@ const ObservationForm: React.FC = () => {
           style={{
             fontSize: "clamp(1.05rem, 3vw, 1.25rem)",
             fontWeight: 800,
-            color: "var(--white)",
+            color: "var(--text)",
             marginBottom: 12,
           }}
         >
@@ -349,7 +349,7 @@ const ObservationForm: React.FC = () => {
                 padding: "10px 14px",
                 fontSize: "0.78rem",
                 fontWeight: 800,
-                color: "var(--purple-light)",
+                color: "var(--green-dark)",
                 letterSpacing: "0.04em",
               }}
             >
@@ -360,7 +360,7 @@ const ObservationForm: React.FC = () => {
 
         <div
           style={{
-            border: "1px solid var(--navy-border)",
+            border: "1px solid var(--border)",
             borderRadius: "0 0 var(--radius-sm) var(--radius-sm)",
             overflow: "hidden",
           }}
@@ -381,7 +381,7 @@ const ObservationForm: React.FC = () => {
                 {/* Observed */}
                 <div
                   style={{
-                    background: "rgba(255,255,255,0.03)",
+                    background: "var(--bg)",
                     padding: "14px",
                     display: "flex",
                     alignItems: "flex-start",
@@ -391,7 +391,7 @@ const ObservationForm: React.FC = () => {
                     style={{
                       fontSize: "0.88rem",
                       fontWeight: 700,
-                      color: "var(--white)",
+                      color: "var(--text)",
                       lineHeight: 1.5,
                     }}
                   >
@@ -401,7 +401,7 @@ const ObservationForm: React.FC = () => {
                 {/* Guiding question */}
                 <div
                   style={{
-                    background: "rgba(255,255,255,0.025)",
+                    background: "var(--bg)",
                     padding: "14px",
                   }}
                 >
@@ -410,7 +410,7 @@ const ObservationForm: React.FC = () => {
                       key={li}
                       style={{
                         fontSize: "0.85rem",
-                        color: "var(--muted)",
+                        color: "var(--text-muted)",
                         lineHeight: 1.6,
                       }}
                     >
@@ -421,7 +421,7 @@ const ObservationForm: React.FC = () => {
                 {/* Notes */}
                 <div
                   style={{
-                    background: "var(--navy)",
+                    background: "var(--bg)",
                     padding: "10px",
                   }}
                 >
@@ -440,7 +440,7 @@ const ObservationForm: React.FC = () => {
               <div
                 className="obs-mobile-card"
                 style={{
-                  background: "rgba(255,255,255,0.03)",
+                  background: "var(--bg)",
                   borderTop: i > 0 ? "1px solid var(--navy-border)" : "none",
                   padding: "16px",
                   display: "none",
@@ -452,7 +452,7 @@ const ObservationForm: React.FC = () => {
                   style={{
                     fontSize: "0.9rem",
                     fontWeight: 700,
-                    color: "var(--white)",
+                    color: "var(--text)",
                   }}
                 >
                   {row.observed}
@@ -460,7 +460,7 @@ const ObservationForm: React.FC = () => {
                 <p
                   style={{
                     fontSize: "0.82rem",
-                    color: "var(--muted)",
+                    color: "var(--text-muted)",
                     lineHeight: 1.6,
                     whiteSpace: "pre-line",
                   }}
@@ -489,7 +489,7 @@ const ObservationForm: React.FC = () => {
 
         <div
           style={{
-            border: "1px solid var(--navy-border)",
+            border: "1px solid var(--border)",
             borderRadius: "var(--radius-sm)",
             overflow: "hidden",
           }}
@@ -510,7 +510,7 @@ const ObservationForm: React.FC = () => {
                 padding: "10px 14px",
                 fontSize: "0.78rem",
                 fontWeight: 800,
-                color: "var(--purple-light)",
+                color: "var(--green-dark)",
                 letterSpacing: "0.04em",
               }}
             >
@@ -524,7 +524,7 @@ const ObservationForm: React.FC = () => {
                   padding: "10px 6px",
                   fontSize: "0.72rem",
                   fontWeight: 800,
-                  color: "var(--purple-light)",
+                  color: "var(--green-dark)",
                   textAlign: "center",
                   letterSpacing: "0.02em",
                   lineHeight: 1.3,
@@ -641,7 +641,7 @@ const ObservationForm: React.FC = () => {
                   style={{
                     fontSize: "0.9rem",
                     fontWeight: 700,
-                    color: "var(--white)",
+                    color: "var(--text)",
                     marginBottom: 10,
                     whiteSpace: "pre-line",
                   }}
@@ -671,7 +671,7 @@ const ObservationForm: React.FC = () => {
                           background: isSelected
                             ? "rgba(124,58,237,0.3)"
                             : "rgba(255,255,255,0.04)",
-                          color: isSelected ? "var(--purple-light)" : "var(--muted)",
+                          color: isSelected ? "var(--green-dark)" : "var(--muted)",
                           fontWeight: 800,
                           fontSize: "0.85rem",
                           cursor: "pointer",
@@ -712,7 +712,7 @@ const ObservationForm: React.FC = () => {
                 style={{
                   fontSize: "0.78rem",
                   fontWeight: 800,
-                  color: "var(--purple-light)",
+                  color: "var(--green-dark)",
                   letterSpacing: "0.04em",
                   padding: "6px 0",
                 }}
@@ -729,8 +729,8 @@ const ObservationForm: React.FC = () => {
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 gap: 12,
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid var(--navy-border)",
+                background: "var(--bg)",
+                border: "1px solid var(--border)",
                 borderRadius: "var(--radius-sm)",
                 padding: 14,
               }}
@@ -763,8 +763,8 @@ const ObservationForm: React.FC = () => {
               <div
                 key={mi}
                 style={{
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid var(--navy-border)",
+                  background: "var(--bg)",
+                  border: "1px solid var(--border)",
                   borderRadius: "var(--radius-sm)",
                   padding: 14,
                   display: "flex",
@@ -772,7 +772,7 @@ const ObservationForm: React.FC = () => {
                   gap: 12,
                 }}
               >
-                <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-muted)" }}>
                   רגע {mi + 1}
                 </p>
                 <Textarea
@@ -800,10 +800,10 @@ const ObservationForm: React.FC = () => {
             aria-label="הוספת רגע משמעותי נוסף"
             style={{
               alignSelf: "flex-start",
-              background: "rgba(6,182,212,0.1)",
-              border: "1.5px dashed rgba(6,182,212,0.4)",
+              background: "var(--green-light)",
+              border: "1.5px dashed var(--green)",
               borderRadius: "var(--radius-sm)",
-              color: "var(--cyan-light)",
+              color: "var(--green-dark)",
               padding: "10px 20px",
               cursor: "pointer",
               fontFamily: "var(--font)",
@@ -844,7 +844,7 @@ const ObservationForm: React.FC = () => {
           {/* Overall evaluation */}
           <fieldset
             style={{
-              border: "1px solid var(--navy-border)",
+              border: "1px solid var(--border)",
               borderRadius: "var(--radius-sm)",
               padding: "16px 18px",
             }}
@@ -920,9 +920,9 @@ const ObservationForm: React.FC = () => {
       <div
         role="note"
         style={{
-          background: "rgba(6,182,212,0.08)",
-          border: "1px solid rgba(6,182,212,0.3)",
-          borderRight: "4px solid var(--cyan)",
+          background: "var(--green-light)",
+          border: "1px solid var(--green-mid)",
+          borderRight: "4px solid var(--green)",
           borderRadius: "0 var(--radius-sm) var(--radius-sm) 0",
           padding: "14px 18px",
         }}
@@ -931,7 +931,7 @@ const ObservationForm: React.FC = () => {
           style={{
             fontSize: "0.9rem",
             fontWeight: 600,
-            color: "var(--cyan-light)",
+            color: "var(--green-dark)",
             lineHeight: 1.65,
           }}
         >

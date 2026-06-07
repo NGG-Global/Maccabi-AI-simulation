@@ -1,4 +1,5 @@
 import React from "react";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./styles/global.css";
 import Layout from "./components/Layout";
 import Hero from "./components/Hero";
@@ -9,18 +10,21 @@ import FacilitatorMode from "./components/FacilitatorMode";
 import Reflection from "./components/Reflection";
 import Summary from "./components/Summary";
 
-const App: React.FC = () => {
-  return (
+const App: React.FC = () => (
+  <HashRouter>
     <Layout>
-      <Hero />
-      <Overview />
-      <SimulationFlow />
-      <RoleCards />
-      <FacilitatorMode />
-      <Reflection />
-      <Summary />
+      <Routes>
+        <Route path="/"              element={<Hero />} />
+        <Route path="/background"   element={<Overview />} />
+        <Route path="/flow"         element={<SimulationFlow />} />
+        <Route path="/roles"        element={<RoleCards />} />
+        <Route path="/facilitation" element={<FacilitatorMode />} />
+        <Route path="/reflection"   element={<Reflection />} />
+        <Route path="/summary"      element={<Summary />} />
+        <Route path="*"             element={<Navigate to="/" replace />} />
+      </Routes>
     </Layout>
-  );
-};
+  </HashRouter>
+);
 
 export default App;

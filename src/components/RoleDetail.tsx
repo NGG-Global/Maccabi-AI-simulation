@@ -3,17 +3,16 @@ import type { Role } from "../data/simulationContent";
 import ObservationForm from "./ObservationForm";
 
 const roleBadgeClass: Record<Role["type"], string> = {
-  manager: "badge-manager",
-  participant: "badge-participant",
-  "ai-agent": "badge-ai-agent",
-  observer: "badge-observer",
+  manager: "badge-manager", participant: "badge-participant",
+  "ai-agent": "badge-ai-agent", observer: "badge-observer",
 };
-
 const roleBadgeLabel: Record<Role["type"], string> = {
-  manager: "מנהל/ת ישיבה",
-  participant: "משתתף/ת",
-  "ai-agent": "סוכן AI",
-  observer: "תצפיתן/ית",
+  manager: "מנהל/ת ישיבה", participant: "משתתף/ת",
+  "ai-agent": "סוכן AI", observer: "תצפיתן/ית",
+};
+const roleColor: Record<Role["type"], string> = {
+  manager: "var(--role-manager)", participant: "var(--role-participant)",
+  "ai-agent": "var(--role-ai)", observer: "var(--role-observer)",
 };
 
 type Props = {
@@ -23,334 +22,171 @@ type Props = {
   isModal?: boolean;
 };
 
-const RoleDetail: React.FC<Props> = ({
-  role,
-  onFullscreen,
-  onClose,
-  isModal = false,
-}) => {
-  const [copied, setCopied] = useState(false);
-  const [formOpen, setFormOpen] = useState(false);
+const HEADINGS = new Set([
+  "התפקיד שלך","אופן הפעולה:","שאלות לדוגמה ל-Copilot:",
+  "שאלות לדוגמה:","מקורות מידע לרשותך:","דגש קריטי:","בסיום הסימולציה:",
+]);
+
+const RoleDetail: React.FC<Props> = ({ role, onFullscreen, onClose, isModal = false }) => {
+  const [copied, setCopied]       = useState(false);
+  const [formOpen, setFormOpen]   = useState(false);
   const [formModal, setFormModal] = useState(false);
   const formModalRef = useRef<HTMLDivElement>(null);
-
   const isObserver = role.id === "observer";
-
-  const accentColor =
-    role.type === "ai-agent"
-      ? "var(--cyan)"
-      : role.type === "manager"
-      ? "#f59e0b"
-      : role.type === "observer"
-      ? "var(--purple)"
-      : "var(--emerald)";
+  const accent = roleColor[role.type];
 
   const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(role.fullText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
+    try { await navigator.clipboard.writeText(role.fullText); }
+    catch {
       const ta = document.createElement("textarea");
       ta.value = role.fullText;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
     }
+    setCopied(true); setTimeout(() => setCopied(false), 2500);
   };
 
-  // Close form modal on Escape key
   useEffect(() => {
     if (!formModal) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setFormModal(false);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setFormModal(false); };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [formModal]);
 
-  // Trap focus inside form modal
   useEffect(() => {
-    if (!formModal) return;
-    const el = formModalRef.current;
-    if (!el) return;
-    el.focus();
+    if (formModal) formModalRef.current?.focus();
   }, [formModal]);
 
   return (
-    <div
-      style={{
-        background: "var(--gradient-card)",
-        border: `1px solid ${accentColor}40`,
-        borderRadius: "var(--radius-lg)",
-        padding: isModal ? 0 : "28px",
-        boxShadow: `0 4px 32px ${accentColor}20`,
-        height: "100%",
-      }}
-    >
-      {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div
-        style={{
-          borderBottom: "1px solid var(--navy-border)",
-          paddingBottom: 20,
-          marginBottom: 20,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            gap: 12,
-            flexWrap: "wrap",
-          }}
-        >
+    <div style={{
+      background: "#fff",
+      border: `1.5px solid ${accent}40`,
+      borderRadius: "var(--radius-lg)",
+      padding: isModal ? 0 : "24px",
+      boxShadow: "var(--shadow-md)",
+    }}>
+      {/* Header */}
+      <div style={{ borderBottom: "1px solid var(--border)", paddingBottom: 16, marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
           <div>
-            <span
-              className={`badge ${roleBadgeClass[role.type]}`}
-              style={{ marginBottom: 8, display: "inline-block" }}
-            >
+            <span className={`badge ${roleBadgeClass[role.type]}`} style={{ marginBottom: 6, display: "inline-block" }}>
               {roleBadgeLabel[role.type]}
             </span>
-            <h3
-              style={{
-                fontSize: "clamp(1.1rem, 3vw, 1.4rem)",
-                fontWeight: 800,
-                color: "var(--white)",
-                lineHeight: 1.25,
-              }}
-            >
+            <h3 style={{ fontSize: "clamp(1rem,3vw,1.25rem)", fontWeight: 800, color: "var(--text)", lineHeight: 1.25 }}>
               {role.title}
             </h3>
           </div>
           {!isModal && (
-            <button
-              onClick={onClose}
-              aria-label="סגור פרטי תפקיד"
+            <button onClick={onClose} aria-label="סגור"
               style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 8,
-                color: "var(--muted)",
-                padding: "4px 10px",
-                cursor: "pointer",
-                fontFamily: "var(--font)",
-                fontSize: "0.85rem",
-                flexShrink: 0,
-              }}
-            >
-              ✕
-            </button>
+                background: "var(--bg)", border: "1px solid var(--border)",
+                borderRadius: 8, color: "var(--text-muted)",
+                padding: "3px 10px", cursor: "pointer", fontFamily: "var(--font)", fontSize: "0.85rem",
+              }}>✕</button>
           )}
         </div>
       </div>
 
-      {/* ── Full role text ──────────────────────────────────────────────── */}
-      <div
-        style={{
-          marginBottom: 24,
-          maxHeight: isModal ? "none" : "340px",
-          overflowY: isModal ? "visible" : "auto",
-          paddingLeft: 4,
-        }}
-      >
+      {/* Role text */}
+      <div style={{
+        marginBottom: 20,
+        maxHeight: isModal ? "none" : "340px",
+        overflowY: isModal ? "visible" : "auto",
+      }}>
         {role.fullText.split("\n").map((line, i) => {
-          const isHeading =
-            line === "התפקיד שלך" ||
-            line === "אופן הפעולה:" ||
-            line === "שאלות לדוגמה ל-Copilot:" ||
-            line === "שאלות לדוגמה:" ||
-            line === "מקורות מידע לרשותך:" ||
-            line === "דגש קריטי:" ||
-            line === "בסיום הסימולציה:";
-
-          if (!line.trim()) return <div key={i} style={{ height: 8 }} />;
-
+          const isH = HEADINGS.has(line);
+          if (!line.trim()) return <div key={i} style={{ height: 7 }} />;
           return (
-            <p
-              key={i}
-              style={{
-                fontSize: isHeading ? "0.88rem" : "0.97rem",
-                fontWeight: isHeading ? 700 : 400,
-                color: isHeading ? accentColor : "var(--text)",
-                lineHeight: 1.75,
-                marginBottom: isHeading ? 6 : 4,
-                letterSpacing: isHeading ? "0.02em" : "normal",
-                paddingTop: isHeading ? 8 : 0,
-              }}
-            >
-              {line}
-            </p>
+            <p key={i} style={{
+              fontSize: isH ? "0.82rem" : "0.95rem",
+              fontWeight: isH ? 700 : 400,
+              color: isH ? accent : "var(--text)",
+              lineHeight: 1.75,
+              marginBottom: isH ? 4 : 3,
+              letterSpacing: isH ? "0.02em" : "normal",
+              paddingTop: isH ? 6 : 0,
+            }}>{line}</p>
           );
         })}
       </div>
 
-      {/* ── Role action buttons ─────────────────────────────────────────── */}
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: isObserver ? 28 : 0 }}>
-        <button
-          className="btn btn-primary"
-          onClick={handleCopy}
+      {/* Actions */}
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: isObserver ? 24 : 0 }}>
+        <button className="btn btn-primary" onClick={handleCopy}
           aria-label="העתקת תוכן התפקיד ללוח"
-          style={{ fontSize: "0.9rem", padding: "10px 20px" }}
-        >
+          style={{ fontSize: "0.88rem", padding: "9px 18px" }}>
           {copied ? "✓ הועתק!" : "העתקת התפקיד"}
         </button>
         {!isModal && (
-          <button
-            className="btn btn-secondary"
-            onClick={onFullscreen}
-            aria-label="פתח תפקיד במסך מלא"
-            style={{ fontSize: "0.9rem", padding: "10px 20px" }}
-          >
-            פתח במסך מלא
+          <button className="btn btn-secondary" onClick={onFullscreen}
+            aria-label="פתח במסך מלא"
+            style={{ fontSize: "0.88rem", padding: "9px 18px" }}>
+            מסך מלא
           </button>
         )}
       </div>
 
-      {/* ── Observer: Observation form section ─────────────────────────── */}
+      {/* Observer: observation form */}
       {isObserver && (
-        <div
-          style={{
-            borderTop: "1px solid var(--navy-border)",
-            paddingTop: 24,
-          }}
-        >
-          {/* Section header */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 12,
-              flexWrap: "wrap",
-              marginBottom: 16,
-            }}
-          >
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
             <div>
-              <h4
-                style={{
-                  fontSize: "1rem",
-                  fontWeight: 800,
-                  color: "var(--white)",
-                  marginBottom: 4,
-                }}
-              >
+              <h4 style={{ fontSize: "0.95rem", fontWeight: 800, color: "var(--text)", marginBottom: 2 }}>
                 דף תצפית – התנסות ניהולית עתיד קרוב
               </h4>
-              <p style={{ fontSize: "0.82rem", color: "var(--muted)" }}>
-                טופס תצפית דיגיטלי אינטראקטיבי — נשמר אוטומטית
-              </p>
+              <p style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>נשמר אוטומטית במכשיר</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
-              <button
-                className="btn btn-secondary"
-                onClick={() => setFormModal(true)}
-                aria-label="פתיחת דף תצפית במסך מלא"
-                style={{ fontSize: "0.85rem", padding: "9px 16px" }}
-              >
-                מסך מלא
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => setFormOpen((o) => !o)}
+              <button className="btn btn-ghost" onClick={() => setFormModal(true)}
+                aria-label="פתח דף תצפית במסך מלא"
+                style={{ fontSize: "0.82rem", padding: "8px 14px" }}>מסך מלא</button>
+              <button className="btn btn-primary" onClick={() => setFormOpen(o => !o)}
                 aria-expanded={formOpen}
-                aria-controls="obs-form-inline"
                 aria-label={formOpen ? "סגור דף תצפית" : "פתיחת דף תצפית דיגיטלי"}
-                style={{ fontSize: "0.85rem", padding: "9px 16px" }}
-              >
+                style={{ fontSize: "0.82rem", padding: "8px 14px" }}>
                 {formOpen ? "סגור תצפית" : "פתיחת דף תצפית דיגיטלי"}
               </button>
             </div>
           </div>
 
-          {/* Inline form */}
           {formOpen && (
-            <div
-              id="obs-form-inline"
-              style={{
-                background: "rgba(0,0,0,0.25)",
-                border: "1px solid rgba(124,58,237,0.3)",
-                borderRadius: "var(--radius-lg)",
-                padding: "clamp(16px, 3vw, 28px)",
-                marginTop: 4,
-              }}
-            >
+            <div style={{
+              background: "var(--bg)", border: "1px solid var(--border)",
+              borderRadius: "var(--radius-lg)", padding: "clamp(16px,3vw,28px)", marginTop: 4,
+            }}>
               <ObservationForm />
             </div>
           )}
         </div>
       )}
 
-      {/* ── Fullscreen observation form modal ──────────────────────────── */}
+      {/* Observation form fullscreen modal */}
       {isObserver && formModal && (
-        <div
-          className="fullscreen-wrapper"
-          role="dialog"
-          aria-modal="true"
+        <div className="fullscreen-wrapper" role="dialog" aria-modal="true"
           aria-label="דף תצפית דיגיטלי"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setFormModal(false);
-          }}
-        >
-          <div
-            ref={formModalRef}
-            tabIndex={-1}
-            style={{
-              background: "var(--navy-mid)",
-              border: "1px solid var(--navy-border)",
-              borderRadius: "var(--radius-xl)",
-              padding: "clamp(20px, 4vw, 40px)",
-              maxWidth: 900,
-              width: "100%",
-              maxHeight: "92vh",
-              overflowY: "auto",
-              position: "relative",
-              outline: "none",
-            }}
-          >
-            {/* Modal close */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 24,
-                paddingBottom: 16,
-                borderBottom: "1px solid var(--navy-border)",
-              }}
-            >
-              <h2
-                style={{
-                  fontSize: "clamp(1rem, 3vw, 1.25rem)",
-                  fontWeight: 800,
-                  color: "var(--white)",
-                }}
-              >
+          onClick={e => { if (e.target === e.currentTarget) setFormModal(false); }}>
+          <div ref={formModalRef} tabIndex={-1} style={{
+            background: "#fff", border: "1px solid var(--border)",
+            borderRadius: "var(--radius-xl)",
+            padding: "clamp(20px,4vw,40px)",
+            maxWidth: 900, width: "100%", maxHeight: "92vh", overflowY: "auto",
+            position: "relative", outline: "none",
+          }}>
+            <div style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              marginBottom: 24, paddingBottom: 16, borderBottom: "1px solid var(--border)",
+            }}>
+              <h2 style={{ fontSize: "clamp(1rem,3vw,1.2rem)", fontWeight: 800, color: "var(--text)" }}>
                 דף תצפית – התנסות ניהולית עתיד קרוב
               </h2>
-              <button
-                onClick={() => setFormModal(false)}
-                aria-label="סגור דף תצפית"
+              <button onClick={() => setFormModal(false)} aria-label="סגור"
                 style={{
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  borderRadius: 8,
-                  color: "var(--text)",
-                  padding: "7px 16px",
-                  cursor: "pointer",
-                  fontFamily: "var(--font)",
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  flexShrink: 0,
-                }}
-              >
-                ✕ סגור
-              </button>
+                  background: "var(--bg)", border: "1px solid var(--border)",
+                  borderRadius: 8, color: "var(--text-muted)",
+                  padding: "7px 16px", cursor: "pointer",
+                  fontFamily: "var(--font)", fontWeight: 600, fontSize: "0.88rem",
+                }}>✕ סגור</button>
             </div>
-
             <ObservationForm />
           </div>
         </div>
