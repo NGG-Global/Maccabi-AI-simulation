@@ -96,42 +96,6 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      {/* Duration card */}
-      <div className="card">
-        <h3 style={{
-          fontSize: "0.8rem", fontWeight: 700,
-          color: "var(--text-muted)", letterSpacing: "0.06em",
-          textTransform: "uppercase", marginBottom: 20,
-        }}>
-          לוח זמנים — 75 דקות
-        </h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-          {[
-            { time: "10 דקות", label: "פתיחה והסבר המשימה (מליאה)" },
-            { time: "40 דקות", label: "המשחק והסימולציה בשולחנות" },
-            { time: "15 דקות", label: "עיבוד ורפלקציה בשולחנות הקטנים" },
-            { time: "10 דקות", label: "אינטגרציה קצרה וסגירה" },
-          ].map((item, i, arr) => (
-            <div key={i} style={{
-              display: "flex", alignItems: "center", gap: 16,
-              padding: "14px 0",
-              borderBottom: i < arr.length - 1 ? "1px solid var(--border-mid)" : "none",
-            }}>
-              <div style={{
-                minWidth: 80,
-                background: "var(--green-light)",
-                border: "1px solid var(--green-mid)",
-                borderRadius: 8, padding: "4px 10px",
-                textAlign: "center", fontSize: "0.82rem",
-                fontWeight: 700, color: "var(--green-dark)",
-              }}>
-                {item.time}
-              </div>
-              <span style={{ fontSize: "0.95rem", color: "var(--text)" }}>{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };
