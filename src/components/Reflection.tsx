@@ -64,7 +64,7 @@ const Reflection: React.FC = () => {
             </button>
 
             {/* Dots */}
-            <div role="tablist" aria-label="שאלות" style={{ display: "flex", gap: 7 }}>
+            <div role="tablist" aria-label="שאלות" style={{ display: "flex", gap: 5, flexWrap: "wrap", justifyContent: "center", maxWidth: 200 }}>
               {reflectionQuestions.map((_, i) => (
                 <button key={i} role="tab" aria-selected={i === current}
                   aria-label={`שאלה ${i + 1}`}

@@ -59,7 +59,7 @@ const SimulationFlow: React.FC = () => {
           return (
             <div key={phase.id} style={{ display: "flex", gap: 0, position: "relative" }}>
               {/* Timeline line + dot */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: 20 }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: "clamp(8px,3vw,20px)" }}>
                 <div style={{
                   width: 40, height: 40, borderRadius: "50%",
                   background: `${color}18`,

@@ -78,7 +78,7 @@ const Hero: React.FC = () => {
           </div>
 
           <button
-            className="btn"
+            className="btn hero-cta"
             onClick={() => navigate("/background")}
             aria-label="התחלת הסימולציה"
             style={{
@@ -93,6 +93,11 @@ const Hero: React.FC = () => {
           >
             התחלת הסימולציה ←
           </button>
+          <style>{`
+            @media (max-width: 480px) {
+              .hero-cta { width: 100%; justify-content: center; }
+            }
+          `}</style>
         </div>
       </div>
 

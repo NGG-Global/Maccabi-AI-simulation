@@ -17,12 +17,12 @@ const Logo: React.FC = () => (
       height={36}
       style={{ display: "block" }}
     />
-    <div style={{
+    <div className="logo-divider" style={{
       width: 1, height: 28,
       background: "var(--border)",
       flexShrink: 0,
     }} aria-hidden="true" />
-    <div style={{ fontWeight: 600, fontSize: "0.78rem", color: "#44546A", lineHeight: 1.3 }}>
+    <div className="logo-subtitle" style={{ fontWeight: 600, fontSize: "0.78rem", color: "#44546A", lineHeight: 1.3 }}>
       AI Master<br />
       <span style={{ fontWeight: 500, fontSize: "0.72rem" }}>ניהול בעידן האג'נטי</span>
     </div>
@@ -186,6 +186,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         }
         @media (min-width: 781px) {
           .step-mobile-label { display: none !important; }
+        }
+        @media (max-width: 480px) {
+          .logo-subtitle { display: none !important; }
+          .logo-divider  { display: none !important; }
         }
       `}</style>
     </>

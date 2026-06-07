@@ -207,25 +207,33 @@ const RolePage: React.FC = () => {
       {/* Role navigation */}
       <div style={{ display: "flex", gap: 12, justifyContent: "space-between", flexWrap: "wrap" }}>
         <button
-          className="btn btn-ghost"
+          className="btn btn-ghost role-nav-btn"
           onClick={() => prevRole && navigate(`/roles/${prevRole.id}`)}
           disabled={!prevRole}
           style={{ opacity: prevRole ? 1 : 0, pointerEvents: prevRole ? "auto" : "none" }}
         >
-          → {prevRole?.title ?? ""}
+          <span aria-hidden="true">→</span>
+          <span className="role-nav-label">{prevRole?.title ?? ""}</span>
         </button>
         <button className="btn btn-secondary" onClick={() => navigate("/roles")}>
           כל התפקידים
         </button>
         <button
-          className="btn btn-ghost"
+          className="btn btn-ghost role-nav-btn"
           onClick={() => nextRole && navigate(`/roles/${nextRole.id}`)}
           disabled={!nextRole}
           style={{ opacity: nextRole ? 1 : 0, pointerEvents: nextRole ? "auto" : "none" }}
         >
-          {nextRole?.title ?? ""} ←
+          <span className="role-nav-label">{nextRole?.title ?? ""}</span>
+          <span aria-hidden="true">←</span>
         </button>
       </div>
+      <style>{`
+        @media (max-width: 480px) {
+          .role-nav-label { display: none; }
+          .role-nav-btn   { padding: 9px 16px !important; }
+        }
+      `}</style>
 
       {/* Observation form fullscreen modal */}
       {isObserver && formModal && (
