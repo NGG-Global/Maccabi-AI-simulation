@@ -10,23 +10,21 @@ export const PAGES = [
 ];
 
 const Logo: React.FC = () => (
-  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-label="לוגו">
-      <rect width="34" height="34" rx="8" fill="#183176"/>
-      <path d="M17 7 L27 13 L27 21 C27 25.5 22.5 29 17 30 C11.5 29 7 25.5 7 21 L7 13 Z"
-            fill="none" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-      <path d="M17 11 L23 14.5 L23 20 C23 23 20.5 25.5 17 26.5 C13.5 25.5 11 23 11 20 L11 14.5 Z"
-            fill="rgba(249,95,136,0.75)"/>
-      <path d="M17 15 L20 16.8 L20 19.5 C20 21.3 18.8 22.7 17 23.3 C15.2 22.7 14 21.3 14 19.5 L14 16.8 Z"
-            fill="white" opacity="0.9"/>
-    </svg>
-    <div>
-      <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#0E1F4D", lineHeight: 1.1 }}>
-        מכבי שירותי בריאות
-      </div>
-      <div style={{ fontWeight: 500, fontSize: "0.72rem", color: "#44546A", lineHeight: 1 }}>
-        AI Master — ניהול בעידן האג'נטי
-      </div>
+  <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+    <img
+      src={`${import.meta.env.BASE_URL}maccabi-logo.svg`}
+      alt="מכבי שירותי בריאות"
+      height={36}
+      style={{ display: "block" }}
+    />
+    <div style={{
+      width: 1, height: 28,
+      background: "var(--border)",
+      flexShrink: 0,
+    }} aria-hidden="true" />
+    <div style={{ fontWeight: 600, fontSize: "0.78rem", color: "#44546A", lineHeight: 1.3 }}>
+      AI Master<br />
+      <span style={{ fontWeight: 500, fontSize: "0.72rem" }}>ניהול בעידן האג'נטי</span>
     </div>
   </div>
 );
