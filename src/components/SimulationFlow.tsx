@@ -4,8 +4,6 @@ import { simulationPhases } from "../data/simulationContent";
 const phaseColors = ["var(--accent)", "var(--green)", "var(--role-ai)", "var(--role-observer)", "var(--role-manager)"];
 
 const SimulationFlow: React.FC = () => {
-  const totalMinutes = simulationPhases.reduce((s, p) => s + p.duration, 0);
-
   return (
     <div className="page-content">
       <h2 className="section-title">מהלך הישיבה</h2>
@@ -42,7 +40,7 @@ const SimulationFlow: React.FC = () => {
             padding: "4px 14px", marginBottom: 20,
             fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.04em",
           }}>
-            סימולציה ניהולית — {totalMinutes} דקות
+            סימולציה ניהולית
           </div>
 
           <p style={{ fontSize: "clamp(0.95rem, 2vw, 1.05rem)", lineHeight: 1.9, opacity: 0.95, maxWidth: 640 }}>
@@ -117,24 +115,6 @@ const SimulationFlow: React.FC = () => {
         })}
       </div>
 
-      {/* Total */}
-      <div style={{
-        marginTop: 24,
-        padding: "14px 20px",
-        background: "var(--green-light)",
-        border: "1px solid var(--green-mid)",
-        borderRadius: "var(--radius-md)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}>
-        <span style={{ fontWeight: 600, color: "var(--text-muted)", fontSize: "0.88rem" }}>
-          סה"כ זמן הסימולציה
-        </span>
-        <span style={{ fontWeight: 800, color: "var(--green-dark)", fontSize: "1.1rem" }}>
-          {totalMinutes} דקות
-        </span>
-      </div>
     </div>
   );
 };
