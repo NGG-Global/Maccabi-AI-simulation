@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 export const PAGES = [
   { path: "/",            label: "פתיחה",           short: "פתיחה" },
   { path: "/background",  label: "רקע לסימולציה",   short: "רקע" },
-  { path: "/flow",        label: "מהלך הישיבה",     short: "מהלך" },
   { path: "/roles",       label: "כרטיסיות תפקיד",  short: "תפקידים" },
   { path: "/reflection",  label: "רפלקציה קבוצתית", short: "רפלקציה" },
 ];
