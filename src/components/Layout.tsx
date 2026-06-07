@@ -12,9 +12,9 @@ export const PAGES = [
 const Logo: React.FC = () => (
   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
     <img
-      src={`${import.meta.env.BASE_URL}maccabi-logo.svg`}
+      src={`${import.meta.env.BASE_URL}logo macabi- cmyk-Heb כחול.png`}
       alt="מכבי שירותי בריאות"
-      height={36}
+      height={40}
       style={{ display: "block" }}
     />
     <div className="logo-divider" style={{
