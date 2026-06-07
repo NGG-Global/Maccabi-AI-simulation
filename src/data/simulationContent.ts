@@ -169,6 +169,92 @@ export const insightCards: InsightCard[] = [
   },
 ];
 
+// ─── Observation Form ────────────────────────────────────────────────────────
+
+export type ObservationFocusRow = {
+  observed: string;
+  guidingQuestion: string;
+};
+
+export type ObservationRating = {
+  label: string;
+};
+
+export type ObservationMoment = {
+  behavior: string;
+  meaning: string;
+};
+
+export type ObservationFormContent = {
+  title: string;
+  purpose: string;
+  focusSectionTitle: string;
+  focusTableHeaders: [string, string, string];
+  focusRows: ObservationFocusRow[];
+  ratingSectionTitle: string;
+  ratingScale: string[];
+  ratingTableHeaders: [string, string, string, string, string, string];
+  ratingRows: ObservationRating[];
+  momentsSectionTitle: string;
+  momentHeaders: [string, string];
+  summarySectionTitle: string;
+  summaryFields: string[];
+  overallEvaluationQuestion: string;
+  overallEvaluationOptions: string[];
+  observerInstruction: string;
+};
+
+export const observationFormContent: ObservationFormContent = {
+  title: "דף תצפית – התנסות ניהולית עתיד קרוב",
+  purpose:
+    "מטרת התצפית: לבחון כיצד השולחן משתמש בסוכני AI\nכיצד מגיבים להמלצות שלהם, וכיצד מידע דיגיטלי משפיע על השיח הניהולי וקבלת ההחלטות",
+  focusSectionTitle: "1. מיקוד התצפית",
+  focusTableHeaders: ["מה נצפה?", "שאלות מכוונות לצופה", "תיעוד קצר / ציטוטים"],
+  focusRows: [
+    {
+      observed: "שימוש בסוכני AI",
+      guidingQuestion:
+        "מתי פונים לסוכן? מי יוזם? האם\nהשימוש ממוקד או כללי?",
+    },
+    {
+      observed: "השפעת המידע הדיגיטלי",
+      guidingQuestion:
+        "האם הנתונים משנים סדרי\nעדיפויות, עמדות או החלטות?",
+    },
+    {
+      observed: "שיח ניהולי",
+      guidingQuestion:
+        "האם השיחה הופכת מבוססת\nנתונים? האם יש מתחים בין ניסיון\nאנושי להמלצת AI?",
+    },
+  ],
+  ratingSectionTitle: "2. מדדי הערכה במהלך הסימולציה",
+  ratingScale: ["1 נמוך", "2", "3", "4", "5 גבוה"],
+  ratingTableHeaders: ["מדד", "1 נמוך", "2", "3", "4", "5 גבוה"],
+  ratingRows: [
+    { label: "שילוב AI בדיון" },
+    { label: "חשיבה\nביקורתית כלפי\nהמלצות AI" },
+    { label: "שיתוף פעולה בין\nמשתתפים" },
+    { label: "קבלת החלטות\nמבוססת מידע" },
+    { label: "איזון בין אדם\nלמכונה" },
+  ],
+  momentsSectionTitle: "3. רגעים משמעותיים לזיהוי",
+  momentHeaders: [
+    "רגע / התנהגות שנצפתה",
+    "מה זה מלמד על השילוב בין האדם למכונה?",
+  ],
+  summarySectionTitle: "4. סיכום התצפית והערכת השילוב בין אדם למכונה",
+  summaryFields: [
+    "נקודת חוזק מרכזית בשימוש ב-AI",
+    "אתגר / סיכון שעלה בשילוב AI",
+  ],
+  overallEvaluationQuestion: "הערכה כוללת: עד כמה השילוב היה אפקטיבי?",
+  overallEvaluationOptions: ["נמוך", "בינוני", "גבוה"],
+  observerInstruction:
+    "הנחיה לצופה: התמקד/י בהתנהגויות נצפות ובציטוטים קצרים, ולא בפרשנות כללית בלבד.",
+};
+
+// ─── Simulation Phases ────────────────────────────────────────────────────────
+
 export type Phase = {
   id: string;
   title: string;
