@@ -16,25 +16,30 @@ const Hero: React.FC = () => {
           position: "relative",
           overflow: "hidden",
           marginBottom: 32,
-          boxShadow: "0 8px 40px rgba(0,166,81,0.3)",
+          boxShadow: "0 8px 40px rgba(24,49,118,0.35)",
         } as React.CSSProperties}
       >
-        {/* Decorative circles */}
+        {/* Decorative elements */}
         <div aria-hidden="true" style={{
           position: "absolute", top: -60, left: -60,
           width: 220, height: 220, borderRadius: "50%",
-          background: "rgba(255,255,255,0.07)",
+          background: "rgba(255,255,255,0.06)",
         }} />
         <div aria-hidden="true" style={{
           position: "absolute", bottom: -40, right: 40,
           width: 160, height: 160, borderRadius: "50%",
-          background: "rgba(255,255,255,0.05)",
+          background: "rgba(249,95,136,0.18)",
+        }} />
+        <div aria-hidden="true" style={{
+          position: "absolute", top: 30, left: 120,
+          width: 80, height: 80, borderRadius: "50%",
+          background: "rgba(249,95,136,0.10)",
         }} />
 
         <div style={{ position: "relative" }}>
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 8,
-            background: "rgba(255,255,255,0.18)", borderRadius: 999,
+            background: "rgba(255,255,255,0.15)", borderRadius: 999,
             padding: "5px 16px", marginBottom: 24,
           }}>
             <span style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.04em" }}>
@@ -64,8 +69,8 @@ const Hero: React.FC = () => {
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 36 }}>
             {["מפגש 1", "התנסות ניהולית עתיד קרוב"].map((t) => (
               <span key={t} style={{
-                background: "rgba(255,255,255,0.2)",
-                border: "1px solid rgba(255,255,255,0.35)",
+                background: "rgba(255,255,255,0.18)",
+                border: "1px solid rgba(255,255,255,0.32)",
                 borderRadius: 999, padding: "5px 14px",
                 fontSize: "0.82rem", fontWeight: 600,
               }}>{t}</span>
@@ -82,7 +87,7 @@ const Hero: React.FC = () => {
               fontWeight: 800,
               fontSize: "1rem",
               padding: "13px 32px",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.18)",
               border: "none",
             }}
           >
@@ -93,7 +98,11 @@ const Hero: React.FC = () => {
 
       {/* Duration card */}
       <div className="card">
-        <h3 style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 20 }}>
+        <h3 style={{
+          fontSize: "0.8rem", fontWeight: 700,
+          color: "var(--text-muted)", letterSpacing: "0.06em",
+          textTransform: "uppercase", marginBottom: 20,
+        }}>
           לוח זמנים — 75 דקות
         </h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
@@ -109,7 +118,8 @@ const Hero: React.FC = () => {
               borderBottom: i < arr.length - 1 ? "1px solid var(--border-mid)" : "none",
             }}>
               <div style={{
-                minWidth: 80, background: "var(--green-light)",
+                minWidth: 80,
+                background: "var(--green-light)",
                 border: "1px solid var(--green-mid)",
                 borderRadius: 8, padding: "4px 10px",
                 textAlign: "center", fontSize: "0.82rem",

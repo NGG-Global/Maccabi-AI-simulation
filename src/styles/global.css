@@ -7,26 +7,32 @@
 }
 
 :root {
-  /* Maccabi brand */
-  --green:        #00A651;
-  --green-dark:   #00703A;
-  --green-deeper: #005C2E;
-  --green-light:  #E6F7EE;
-  --green-mid:    #C2E8D2;
-  --green-tint:   #F0FAF4;
+  /* ── Primary — deep navy ───────────────────────── */
+  --green:        #183176;
+  --green-dark:   #0E1F4D;
+  --green-deeper: #091429;
+  --green-light:  #EEF1F9;
+  --green-mid:    #C7D0E8;
+  --green-tint:   #F5F7FC;
 
-  --white:  #FFFFFF;
-  --bg:     #F5FAF7;
-  --bg-card:#FFFFFF;
+  /* ── Accent — warm pink ────────────────────────── */
+  --accent:       #F95F88;
+  --accent-dark:  #D25089;
+  --accent-light: #FBEEF1;
+  --accent-mid:   #F4DCD9;
 
-  --text:       #1A2E22;
-  --text-muted: #5A7A65;
-  --border:     #C8E0D2;
-  --border-mid: #E0F0E8;
+  --white:   #FFFFFF;
+  --bg:      #F5F7FC;
+  --bg-card: #FFFFFF;
 
-  --shadow-sm:   0 1px 4px rgba(0,100,50,0.08);
-  --shadow-md:   0 4px 16px rgba(0,100,50,0.1);
-  --shadow-lg:   0 8px 32px rgba(0,100,50,0.13);
+  --text:       #272525;
+  --text-muted: #44546A;
+  --border:     #D0D5E8;
+  --border-mid: #EEF1F9;
+
+  --shadow-sm: 0 1px 4px rgba(24,49,118,0.08);
+  --shadow-md: 0 4px 16px rgba(24,49,118,0.10);
+  --shadow-lg: 0 8px 32px rgba(24,49,118,0.14);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -38,9 +44,9 @@
 
   /* Role accent colours */
   --role-manager:     #F59E0B;
-  --role-participant: #00A651;
-  --role-ai:         #0EA5E9;
-  --role-observer:   #8B5CF6;
+  --role-participant: #183176;
+  --role-ai:          #139BFE;
+  --role-observer:    #5D29ED;
 }
 
 html {
@@ -104,7 +110,7 @@ a      { color: inherit; text-decoration: none; }
 .section-divider {
   width: 48px;
   height: 4px;
-  background: var(--green);
+  background: var(--accent);
   border-radius: 2px;
   margin-bottom: 32px;
 }
@@ -141,11 +147,11 @@ a      { color: inherit; text-decoration: none; }
 .btn-primary {
   background: var(--green);
   color: #fff;
-  box-shadow: 0 2px 8px rgba(0,166,81,0.3);
+  box-shadow: 0 2px 8px rgba(24,49,118,0.30);
 }
 .btn-primary:hover {
   background: var(--green-dark);
-  box-shadow: 0 4px 16px rgba(0,166,81,0.35);
+  box-shadow: 0 4px 16px rgba(24,49,118,0.35);
   transform: translateY(-1px);
 }
 .btn-primary:disabled {
@@ -183,6 +189,17 @@ a      { color: inherit; text-decoration: none; }
   background: #FEF2F2;
 }
 
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(249,95,136,0.30);
+}
+.btn-accent:hover {
+  background: var(--accent-dark);
+  box-shadow: 0 4px 16px rgba(249,95,136,0.35);
+  transform: translateY(-1px);
+}
+
 /* ── Chips / badges ──────────────────────────────── */
 .chip {
   display: inline-flex;
@@ -194,11 +211,12 @@ a      { color: inherit; text-decoration: none; }
   font-weight: 600;
   border: 1px solid;
 }
-.chip-green   { background: var(--green-light); border-color: var(--green-mid);  color: var(--green-dark); }
-.chip-blue    { background: #EFF6FF;             border-color: #BFDBFE;           color: #1D4ED8; }
-.chip-purple  { background: #F5F3FF;             border-color: #DDD6FE;           color: #6D28D9; }
-.chip-amber   { background: #FFFBEB;             border-color: #FDE68A;           color: #B45309; }
-.chip-cyan    { background: #ECFEFF;             border-color: #A5F3FC;           color: #0E7490; }
+.chip-green  { background: var(--green-light); border-color: var(--green-mid);   color: var(--green-dark); }
+.chip-blue   { background: #EFF6FF;            border-color: #BFDBFE;            color: #1D4ED8; }
+.chip-purple { background: #F5F3FF;            border-color: #DDD6FE;            color: #6D28D9; }
+.chip-amber  { background: #FFFBEB;            border-color: #FDE68A;            color: #B45309; }
+.chip-cyan   { background: #ECFEFF;            border-color: #A5F3FC;            color: #0E7490; }
+.chip-pink   { background: var(--accent-light);border-color: var(--accent-mid);  color: var(--accent-dark); }
 
 .badge {
   font-size: 0.7rem;
@@ -209,10 +227,10 @@ a      { color: inherit; text-decoration: none; }
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.badge-manager     { background: #FFFBEB; color: #B45309; border-color: #FDE68A; }
-.badge-participant { background: var(--green-light); color: var(--green-dark); border-color: var(--green-mid); }
-.badge-ai-agent    { background: #EFF6FF; color: #1D4ED8; border-color: #BFDBFE; }
-.badge-observer    { background: #F5F3FF; color: #6D28D9; border-color: #DDD6FE; }
+.badge-manager     { background: #FFFBEB;             color: #B45309;            border-color: #FDE68A; }
+.badge-participant { background: var(--green-light);  color: var(--green-dark);  border-color: var(--green-mid); }
+.badge-ai-agent    { background: #EFF6FF;             color: #1D4ED8;            border-color: #BFDBFE; }
+.badge-observer    { background: #F5F3FF;             color: #6D28D9;            border-color: #DDD6FE; }
 
 /* ── Fullscreen overlay ──────────────────────────── */
 .fullscreen-wrapper {

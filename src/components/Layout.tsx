@@ -2,30 +2,29 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const PAGES = [
-  { path: "/",             label: "פתיחה",            short: "פתיחה" },
-  { path: "/background",  label: "רקע לסימולציה",    short: "רקע" },
-  { path: "/flow",        label: "מהלך הישיבה",      short: "מהלך" },
-  { path: "/roles",       label: "כרטיסיות תפקיד",   short: "תפקידים" },
-  { path: "/facilitation",label: "הנחיית הסימולציה", short: "הנחיה" },
-  { path: "/reflection",  label: "רפלקציה קבוצתית",  short: "רפלקציה" },
-  { path: "/summary",     label: "סיכום",             short: "סיכום" },
+  { path: "/",            label: "פתיחה",           short: "פתיחה" },
+  { path: "/background",  label: "רקע לסימולציה",   short: "רקע" },
+  { path: "/flow",        label: "מהלך הישיבה",     short: "מהלך" },
+  { path: "/roles",       label: "כרטיסיות תפקיד",  short: "תפקידים" },
+  { path: "/reflection",  label: "רפלקציה קבוצתית", short: "רפלקציה" },
 ];
 
-const MaccabiLogo: React.FC = () => (
+const Logo: React.FC = () => (
   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    {/* Maccabi leaf / shield mark */}
-    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-label="לוגו מכבי">
-      <rect width="34" height="34" rx="8" fill="#00A651"/>
-      <path d="M17 6 C17 6 9 11 9 19 C9 24 13 27 17 28 C21 27 25 24 25 19 C25 11 17 6 17 6Z"
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-label="לוגו">
+      <rect width="34" height="34" rx="8" fill="#183176"/>
+      <path d="M17 7 L27 13 L27 21 C27 25.5 22.5 29 17 30 C11.5 29 7 25.5 7 21 L7 13 Z"
+            fill="none" stroke="white" strokeWidth="1.5" opacity="0.6"/>
+      <path d="M17 11 L23 14.5 L23 20 C23 23 20.5 25.5 17 26.5 C13.5 25.5 11 23 11 20 L11 14.5 Z"
+            fill="rgba(249,95,136,0.75)"/>
+      <path d="M17 15 L20 16.8 L20 19.5 C20 21.3 18.8 22.7 17 23.3 C15.2 22.7 14 21.3 14 19.5 L14 16.8 Z"
             fill="white" opacity="0.9"/>
-      <path d="M17 11 C17 11 12 15 12 20 C12 23.3 14.5 25 17 26 C19.5 25 22 23.3 22 20 C22 15 17 11 17 11Z"
-            fill="#00A651"/>
     </svg>
     <div>
-      <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#00703A", lineHeight: 1.1 }}>
+      <div style={{ fontWeight: 800, fontSize: "0.95rem", color: "#0E1F4D", lineHeight: 1.1 }}>
         מכבי שירותי בריאות
       </div>
-      <div style={{ fontWeight: 500, fontSize: "0.72rem", color: "#5A7A65", lineHeight: 1 }}>
+      <div style={{ fontWeight: 500, fontSize: "0.72rem", color: "#44546A", lineHeight: 1 }}>
         AI Master — ניהול בעידן האג'נטי
       </div>
     </div>
@@ -33,7 +32,7 @@ const MaccabiLogo: React.FC = () => (
 );
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const navigate   = useNavigate();
+  const navigate    = useNavigate();
   const { pathname } = useLocation();
 
   const currentIdx = PAGES.findIndex(p => p.path === pathname);
@@ -73,21 +72,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             aria-label="עמוד הבית"
             style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
           >
-            <MaccabiLogo />
+            <Logo />
           </button>
 
           {/* Step dots — desktop */}
           <nav aria-label="ניווט שלבים" className="step-dots-nav">
-            <ol
-              style={{
-                display: "flex",
-                gap: 6,
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                alignItems: "center",
-              }}
-            >
+            <ol style={{ display: "flex", gap: 6, listStyle: "none", padding: 0, margin: 0, alignItems: "center" }}>
               {PAGES.map((page, idx) => {
                 const isActive = idx === currentIdx;
                 const isDone   = idx < currentIdx;
@@ -137,19 +127,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
         {/* Progress bar */}
         <div
-          style={{
-            position: "absolute",
-            bottom: 0, right: 0, left: 0,
-            height: 3,
-            background: "var(--border-mid)",
-          }}
+          style={{ position: "absolute", bottom: 0, right: 0, left: 0, height: 3, background: "var(--border-mid)" }}
           aria-hidden="true"
         >
           <div
             style={{
               height: "100%",
               width: `${((currentIdx + 1) / PAGES.length) * 100}%`,
-              background: "var(--green)",
+              background: "linear-gradient(to left, var(--accent), var(--green))",
               borderRadius: "0 2px 2px 0",
               transition: "width 0.35s ease",
             }}
@@ -165,7 +150,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       {/* ── Bottom page navigation ────────────────── */}
       {currentIdx >= 0 && (
         <div className="page-nav" role="navigation" aria-label="ניווט בין עמודים">
-          {/* Previous */}
           <button
             className="btn btn-ghost"
             onClick={() => hasPrev && goTo(PAGES[currentIdx - 1].path)}
@@ -176,7 +160,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             → {hasPrev ? PAGES[currentIdx - 1].short : ""}
           </button>
 
-          {/* Current step indicator */}
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: "0.78rem", color: "var(--text-muted)", marginBottom: 3 }}>
               שלב {currentIdx + 1} מתוך {PAGES.length}
@@ -186,7 +169,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
           </div>
 
-          {/* Next */}
           <button
             className="btn btn-primary"
             onClick={() => hasNext && goTo(PAGES[currentIdx + 1].path)}
@@ -201,7 +183,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
       <style>{`
         @media (max-width: 780px) {
-          .step-dots-nav  { display: none !important; }
+          .step-dots-nav     { display: none !important; }
           .step-mobile-label { display: flex; align-items: center; }
         }
         @media (min-width: 781px) {
