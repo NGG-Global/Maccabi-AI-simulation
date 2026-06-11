@@ -139,6 +139,49 @@ const RolePage: React.FC = () => {
         </div>
       </div>
 
+      {/* AI agent launch card */}
+      {role.agentUrl && (
+        <div style={{
+          background: "linear-gradient(135deg, #EFF6FF 0%, #EEF1F9 100%)",
+          border: "1.5px solid var(--role-ai)",
+          borderRadius: "var(--radius-lg)",
+          padding: "20px 24px",
+          marginBottom: 24,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 16,
+          flexWrap: "wrap",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{
+              width: 48, height: 48, borderRadius: 12,
+              background: "var(--role-ai)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: "1.3rem", flexShrink: 0,
+            }} aria-hidden="true">⬡</div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--text)", marginBottom: 3 }}>
+                הסוכן מוכן לפעולה
+              </div>
+              <div style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}>
+                לחצו להפעלת סוכן ה-AI בחלון חדש
+              </div>
+            </div>
+          </div>
+          <a
+            href={role.agentUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+            style={{ background: "var(--role-ai)", boxShadow: "0 2px 8px rgba(19,155,254,0.30)", whiteSpace: "nowrap" }}
+            aria-label={`פתח את סוכן ה-AI — ${role.title}`}
+          >
+            פתח את הסוכן ↗
+          </a>
+        </div>
+      )}
+
       {/* Role content */}
       <div style={{
         background: "#fff",

@@ -96,6 +96,18 @@ const RoleCards: React.FC = () => {
                     <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
                       {role.focus}
                     </span>
+                    {role.agentUrl && (
+                      <span style={{
+                        fontSize: "0.7rem", fontWeight: 700,
+                        color: "var(--role-ai)",
+                        background: "#EFF6FF",
+                        border: "1px solid #BFDBFE",
+                        borderRadius: 999,
+                        padding: "1px 8px",
+                      }}>
+                        סוכן חי ↗
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
