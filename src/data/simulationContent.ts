@@ -69,7 +69,7 @@ export const roles: Role[] = [
     title: "סוכן חוסן ורווחת עובדים — Well-being",
     type: "ai-agent",
     focus: "חוסן ורווחת עובדים",
-    agentUrl: "https://chatgpt.com/g/g-6a2b02bacc908191b8f07b0717d3033f-well-being-ai",
+    agentUrl: "https://chatgpt.com/g/g-6a2e4579cf5081919a5fe80aa6fd11d3-well-being-ai-yv-ts-khvsn-rgvny-lmkby",
     fullText: `התפקיד שלך
 את/ה מייצג/ת סוכן AI המתמחה בעומסי עבודה, יכולת צוותית וביצועים בני-קיימא. תפקידך לסייע לצוות לשפר ביצועים תוך שמירה על חוסן אנושי לאורך זמן.
 אופן הפעולה:
@@ -85,7 +85,7 @@ export const roles: Role[] = [
     title: "סוכן תפעול ודאטה — Performance",
     type: "ai-agent",
     focus: "תפעול ודאטה",
-    agentUrl: "https://chatgpt.com/g/g-6a2b0710ba688191a49368d0f74b0d7f-performance-ai",
+    agentUrl: "https://chatgpt.com/g/g-6a2e464dbf188191ab6f15a59f6057c3-performance-ai",
     fullText: `התפקיד שלך
 את/ה מייצג/ת סוכן AI המתמקד בביצועים, תהליכי עבודה, תעדוף ויעילות תפעולית. תפקידך לסייע לצוות לזהות דרכים פרקטיות לשיפור ביצועים וזמינות.
 אופן הפעולה:
